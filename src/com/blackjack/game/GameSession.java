@@ -18,6 +18,9 @@ public class GameSession {
         this.player = player;
         this.dealer = dealer;
     }
+    public void openCard(Person person){
+        person.getReceivedCards().forEach(card -> UI.openCardMessage(person, card));
+    }
     public void run(){
 
     }
