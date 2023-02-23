@@ -12,11 +12,7 @@ public class Dealer extends Person{
 
     @Override
     public boolean selectHitOrStand() {
-        if(Rule.getPersonScore(this) <= 16){
-            return true;
-        }else{
-            return false;
-        }
+        return Rule.getPersonScore(this) <= 16;
     }
     @Override
     public void removeAllCards(){   //한 세션이 끝나고 다음세션을 시작할 때 가지고있는 카드와 카운트를 초기화

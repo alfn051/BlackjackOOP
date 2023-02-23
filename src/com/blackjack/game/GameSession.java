@@ -1,11 +1,8 @@
 package com.blackjack.game;
 
-import com.blackjack.cards.Card;
 import com.blackjack.person.Dealer;
 import com.blackjack.person.Person;
 import com.blackjack.person.Player;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class GameSession {
     Player player;

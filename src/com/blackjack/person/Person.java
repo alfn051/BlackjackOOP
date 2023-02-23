@@ -3,8 +3,6 @@ package com.blackjack.person;
 import java.util.ArrayList;
 import java.util.List;
 import com.blackjack.cards.*;
-import com.blackjack.cards.Suit;
-import com.blackjack.game.UI;
 
 public abstract class Person {
     public Person(){
