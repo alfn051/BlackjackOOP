@@ -1,4 +1,4 @@
-package com.blackjack.cards;
+package com.blackjack.card;
 
 public class Card {
     private String denomination;    //카드 끝수: A,1,2,3,4,5,6,7,8,9,10,J,Q,K

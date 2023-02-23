@@ -2,12 +2,10 @@ package com.blackjack.person;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.blackjack.cards.*;
+import com.blackjack.card.*;
 
 public abstract class Person {
-    public Person(){
 
-    }
     protected List<Card> receivedCards = new ArrayList<>();
 
     public void receiveCard(Card card){ //CardDeck 으로부터 카드를 한장 받아온다.

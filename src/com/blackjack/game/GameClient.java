@@ -1,10 +1,10 @@
 package com.blackjack.game;
 
-import com.blackjack.cards.CardDeck;
 import com.blackjack.person.Dealer;
 import com.blackjack.person.Player;
 
 public class GameClient {
+
     Player player = new Player();
     Dealer dealer = new Dealer();
 

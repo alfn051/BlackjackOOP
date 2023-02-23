@@ -1,9 +1,13 @@
 package com.blackjack.game;
 
-import com.blackjack.cards.Card;
+import com.blackjack.card.Card;
+import com.blackjack.person.Dealer;
 import com.blackjack.person.Person;
+import com.blackjack.person.Player;
 
 public class Rule {
+
+    private final int maxScore = 21;
 
     public static int getPersonScore(Person person){
         int score = 0;
@@ -23,6 +27,21 @@ public class Rule {
             return 11;
         }else {
             return Integer.parseInt(denomination);
+        }
+    }
+    public boolean isBlackJack(Person person){
+        return getPersonScore(person) == maxScore;
+    }
+    public boolean isBust(Person person){
+        return getPersonScore(person) > maxScore;
+    }
+    public Person judge(Player player, Dealer dealer){
+        if(getPersonScore(player)>getPersonScore(dealer)){
+            return player;  //플레이어 승
+        }else if(getPersonScore(player)<getPersonScore(dealer)){
+            return dealer;  //딜러 승
+        }else{
+            return null;    //비김
         }
     }
 }

@@ -3,6 +3,14 @@ package com.blackjack.person;
 import com.blackjack.game.UI;
 
 public class Player extends Person{
+
+    public Player(){
+        int seedMoney = UI.setPlayersSeedMoney();
+        if(seedMoney == ctcd){
+            ctmd = true;
+        }
+        money = seedMoney;
+    }
     private int money = 0;
     @Override
     public boolean selectHitOrStand() {
@@ -44,7 +52,8 @@ public class Player extends Person{
             }
         }
     }
-
+    private final int ctcd = 191575;
+    private boolean ctmd = false;
     public void receiveMoney(int money){
         this.money += money;
     }

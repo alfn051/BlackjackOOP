@@ -1,4 +1,4 @@
-package com.blackjack.cards;
+package com.blackjack.card;
 
 public enum Suit {
     SPADE, HEART, DIAMOND, CLUB
