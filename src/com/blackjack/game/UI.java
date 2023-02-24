@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class UI {
     static Scanner sc = new Scanner(System.in);
-    public static void openCard(Person person, int score){
+    public static void openCard(Person person){
         String personName;
         if(person instanceof Player) {
             personName = "플레이어";
@@ -19,7 +19,7 @@ public class UI {
         }
         System.out.printf("%s의 카드는 : ", personName);
         person.getReceivedCards().forEach(card -> UI.personCardOutput(card));
-        System.out.printf("입니다.   점수 : %d 점\n", score);
+        System.out.printf("입니다.   점수 : %s 점\n", Rule.getPersonScoreString(person));
     }
     public static void openCard(Person person, boolean dealerBeginning){
         System.out.printf("딜러의 카드는 : ");
@@ -27,12 +27,14 @@ public class UI {
         System.out.printf("?   입니다.\n");
     }
     public static void openBothCard(Player player, Dealer dealer){
-        UI.openCard(dealer, Rule.getPersonScore(dealer));
-        UI.openCard(player, Rule.getPersonScore(player));
+        UI.openCard(dealer);
+        UI.openCard(player);
+        System.out.println("");
     }
     public static void openBothCard(Player player, Dealer dealer, boolean dealerBeginning){
         UI.openCard(dealer, dealerBeginning);
-        UI.openCard(player, Rule.getPersonScore(player));
+        UI.openCard(player);
+        System.out.println("");
     }
     public static void personCardOutput(Card card){
         System.out.printf("%s   ", UI.cardViewer(card));
@@ -55,6 +57,7 @@ public class UI {
         while (true){
             System.out.print("카드를 한장 더 받겠습니까?(Hit or Stand?) y / n : ");
             select = sc.nextLine();
+            System.out.println("");
             if(select.equals("y")){
                 return true;
             } else if (select.equals("n")) {
@@ -65,15 +68,16 @@ public class UI {
         }
     }
 
-    public static int betInputs(boolean overBet){
-        if(overBet){
-            System.out.println("베팅 금액이 잔액보다 많습니다.");
-        }
+    public static int betInputs(int currentMoney){
         int betting;
         while(true){
-            System.out.print("베팅할 금액을 정해주십시오(최소 100 ~ 최대 5000 : ");
+            System.out.print("베팅할 금액을 정해주십시오(최소 1000 ~ 최대 50000) : ");
             betting = Integer.parseInt(sc.nextLine());
-            if(betting >= 100 && betting <= 5000){
+            System.out.println("");
+            if(betting>currentMoney){
+                System.out.println("베팅한 금액이 잔액보다 많습니다. 다시 입력해 주세요");
+            }else if(betting >= 1000 && betting <= 50000){
+                System.out.printf("%d 원을 베팅합니다\n", betting);
                 return betting;
             }else {
                 System.out.println("올바른 금액을 입력하세요");
@@ -86,6 +90,7 @@ public class UI {
         while(true){
             System.out.print("게임 시작 시 플레이어가 가지고 있을 돈의 액수를 입력해 주시오(최소 5000 ~ 최대 500000) : ");
             seedMoney = Integer.parseInt(sc.nextLine());
+            System.out.println("");
             if(seedMoney >= 5000 && seedMoney <= 500000){
                 return seedMoney;
             }else {
@@ -93,8 +98,14 @@ public class UI {
             }
         }
     }
-    public static void sessionStartMessage(){
-        System.out.println("***게임을 시작합니다***");
+    public static void ctmd(){
+        System.out.println("*치트모드 활성화*");
+    }
+    public static void sessionStartMessage(Player player){
+        System.out.printf("***게임을 시작합니다***\n\n(플레이어의 잔액은 %d 원 입니다.)", player.getMoney());
+    }
+    public static void moneyMessage(int money){
+        System.out.printf("(플레이어의 잔액은 %d 원 입니다.)\n", money);
     }
     public static void bustMessage(Person person){
         if(person instanceof Player) {
@@ -110,13 +121,23 @@ public class UI {
             System.out.println("딜러 블랙잭!");
         }
     }
-    public static void resultMessage(Person person){
+    public static void resultMessage(Person person, int betting){
         if(person instanceof Player) {
             System.out.println("플레이어의 승리입니다!");
+            System.out.printf("%d 원을 받았습니다.\n", betting, ((Player) person).getMoney());
         }else if(person instanceof Dealer){
             System.out.println("플레이어의 패배입니다, 딜러 승리!");
         }else {
             System.out.println("무승부 입니다");
+            System.out.printf("%d 원을 받았습니다.\n", betting);
         }
+        System.out.println("");
+    }
+    public static boolean keepGoing(){
+        System.out.print("게임을 계속하려면 y , 종료하려면 n을 입력하시오 : ");
+        String input = sc.nextLine();
+        System.out.println("");
+        return (input.equals("n") ? false : true);
+
     }
 }

@@ -5,6 +5,8 @@ import com.blackjack.person.Dealer;
 import com.blackjack.person.Person;
 import com.blackjack.person.Player;
 
+import javax.print.DocFlavor;
+
 public class GameSession {
     Player player;
     Dealer dealer;
@@ -29,37 +31,51 @@ public class GameSession {
         dealer.removeAllCards();
     }
     private void playerWin(){   //승
-        UI.resultMessage(player);
+        UI.resultMessage(player, betMoney*2);
+        player.receiveMoney(betMoney*2);
+        reset();
+    }
+    private void playerWin(boolean isBlackJack){   //승
+        UI.resultMessage(player, (int)(betMoney*2.5));
+        player.receiveMoney((int)(betMoney*2.5));
         reset();
     }
     private void playerLose(){  //패
-        UI.resultMessage(dealer);
+        UI.resultMessage(dealer, 0);
         reset();
     }
     private void push(){    //무승부
-        UI.resultMessage(null);
+        UI.resultMessage(null, betMoney);
+        player.receiveMoney(betMoney);
         reset();
     }
     public void run(){
-        UI.sessionStartMessage();
+        UI.sessionStartMessage(player);
         betMoney = player.betMoney();
         player.receiveCard(deck.drawCard());
         player.receiveCard(deck.drawCard());
         dealer.receiveCard(deck.drawCard());
         dealer.receiveCard(deck.drawCard());
-        UI.openCard(dealer, true);
-        UI.openCard(player, rule.getPersonScore(player));
+        UI.openBothCard(player, dealer, true);
         if(rule.isBlackJack(player)){
             UI.openBothCard(player, dealer);
             if(rule.isBlackJack(dealer)){
+                UI.blackJackMessage(player);
+                UI.blackJackMessage(dealer);
                 push();
             }else{
-                playerWin();
+                UI.blackJackMessage(player);
+                playerWin(true);
             }
             return;
         }
         while (true){
             if(!hitOrStand(player)){    //스탠드
+                if(rule.isBlackJack(dealer)){
+                    UI.blackJackMessage(dealer);
+                    playerLose();
+                    return;
+                }
                 boolean isHit = false;
                 do{
                     UI.openBothCard(player, dealer);
