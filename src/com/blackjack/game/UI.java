@@ -134,7 +134,7 @@ public class UI {
         System.out.println("");
     }
     public static boolean keepGoing(){
-        System.out.print("게임을 계속하려면 y , 종료하려면 n을 입력하시오 : ");
+        System.out.print("게임을 계속하려면 아무키나 누르십시오 , 종료하려면 n을 입력하시오 : ");
         String input = sc.nextLine();
         System.out.println("");
         return (input.equals("n") ? false : true);
