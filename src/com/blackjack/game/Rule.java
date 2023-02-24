@@ -24,7 +24,7 @@ public class Rule {
         if(denomination.equals("A")){
             return 1;
         } else if(denomination.equals("J") || denomination.equals("Q") || denomination.equals("K")) {
-            return 11;
+            return 10;
         }else {
             return Integer.parseInt(denomination);
         }

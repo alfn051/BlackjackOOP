@@ -24,14 +24,21 @@ public class GameSession {
         }
         return false;
     }
-    private void playerWin(){
-
+    private void reset(){
+        player.removeAllCards();
+        dealer.removeAllCards();
     }
-    private void playerLose(){
-
+    private void playerWin(){   //승
+        UI.resultMessage(player);
+        reset();
     }
-    private void push(){
-
+    private void playerLose(){  //패
+        UI.resultMessage(dealer);
+        reset();
+    }
+    private void push(){    //무승부
+        UI.resultMessage(null);
+        reset();
     }
     public void run(){
         UI.sessionStartMessage();
@@ -43,7 +50,7 @@ public class GameSession {
         UI.openCard(dealer, true);
         UI.openCard(player, rule.getPersonScore(player));
         if(rule.isBlackJack(player)){
-            UI.openCard(dealer, rule.getPersonScore(dealer));
+            UI.openBothCard(player, dealer);
             if(rule.isBlackJack(dealer)){
                 push();
             }else{
@@ -52,8 +59,31 @@ public class GameSession {
             return;
         }
         while (true){
-            if(hitOrStand(player)){
-
+            if(!hitOrStand(player)){    //스탠드
+                boolean isHit = false;
+                do{
+                    UI.openBothCard(player, dealer);
+                    isHit = hitOrStand(dealer);
+                }while (isHit);
+                if(rule.isBust(dealer)){
+                    UI.bustMessage(dealer);
+                    playerWin();
+                }else {
+                    Person judgeResult = rule.judge(player, dealer);
+                    if(judgeResult instanceof Player){
+                        playerWin();
+                    } else if (judgeResult instanceof Dealer) {
+                        playerLose();
+                    }else {
+                        push();
+                    }
+                }return;
+            }
+            UI.openBothCard(player, dealer, true);    //히트
+            if(rule.isBust(player)){
+                UI.bustMessage(player);
+                playerLose();
+                return;
             }
         }
     }
