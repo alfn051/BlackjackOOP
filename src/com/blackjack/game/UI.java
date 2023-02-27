@@ -71,7 +71,7 @@ public class UI {
     public static int betInputs(int currentMoney){
         int betting;
         while(true){
-            System.out.print("베팅할 금액을 정해주십시오(최소 1000 ~ 최대 50000) : ");
+            System.out.print("베팅할 금액을 정해주십시오(최소 1000 ~ 최대 5000000) : ");
             betting = Integer.parseInt(sc.nextLine());
             System.out.println("");
             if(betting>currentMoney){
@@ -99,7 +99,7 @@ public class UI {
         }
     }
     public static void ctmd(){
-        System.out.println("*치트모드 활성화*");
+        System.out.println("*\uCE58\uD2B8\uBAA8\uB4DC \uD65C\uC131\uD654*");
     }
     public static void sessionStartMessage(Player player){
         System.out.printf("***게임을 시작합니다***\n\n(플레이어의 잔액은 %d 원 입니다.)", player.getMoney());

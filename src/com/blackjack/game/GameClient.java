@@ -10,7 +10,7 @@ public class GameClient {
 
     public void run() {
         boolean going = true;
-        while (true) {
+        while (going) {
             if(player.getMoney()==0 && !player.getCtmd()){
                 System.out.println("플레이어가 가진 돈이 없습니다.\n게임을 종료합니다");
                 going = false;
