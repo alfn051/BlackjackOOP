@@ -40,7 +40,7 @@ public class UI {
         System.out.printf("%s   ", UI.cardViewer(card));
     }
 
-    public static String cardViewer(Card card){
+    private static String cardViewer(Card card){
         if(card.getSuit()== Suit.SPADE){
             return "♠"+card.getDenomination();
         }if(card.getSuit()==Suit.HEART){
@@ -68,11 +68,25 @@ public class UI {
         }
     }
 
+    private static int intScanner(){
+        while (true){
+            String str = sc.nextLine();
+            int num = 0;
+            try {
+                num = Integer.parseInt(str);
+            }catch (NumberFormatException e){
+                System.out.print("숫자로 된 값만 입력하시오 : ");
+            }if(num != 0){
+                return num;
+            }
+        }
+    }
+
     public static int betInputs(int currentMoney){
         int betting;
         while(true){
-            System.out.print("베팅할 금액을 정해주십시오(최소 1000 ~ 최대 5000000) : ");
-            betting = Integer.parseInt(sc.nextLine());
+            System.out.print("베팅할 금액을 정해주십시오(최소 1000 ~ 최대 50000) : ");
+            betting = intScanner();
             System.out.println("");
             if(betting>currentMoney){
                 System.out.println("베팅한 금액이 잔액보다 많습니다. 다시 입력해 주세요");
@@ -89,7 +103,7 @@ public class UI {
         int seedMoney;
         while(true){
             System.out.print("게임 시작 시 플레이어가 가지고 있을 돈의 액수를 입력해 주시오(최소 5000 ~ 최대 500000) : ");
-            seedMoney = Integer.parseInt(sc.nextLine());
+            seedMoney = intScanner();
             System.out.println("");
             if(seedMoney >= 5000 && seedMoney <= 500000){
                 return seedMoney;
