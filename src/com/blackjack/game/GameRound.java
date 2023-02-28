@@ -5,9 +5,7 @@ import com.blackjack.person.Dealer;
 import com.blackjack.person.Person;
 import com.blackjack.person.Player;
 
-import javax.print.DocFlavor;
-
-public class GameSession {
+public class GameRound {
     Player player;
     Dealer dealer;
     Rule rule = new Rule();
@@ -15,7 +13,7 @@ public class GameSession {
     CardDeck deck = new CardDeck();
 
     int betMoney;
-    public GameSession(Player player, Dealer dealer){
+    public GameRound(Player player, Dealer dealer){
         this.player = player;
         this.dealer = dealer;
     }
